@@ -1,0 +1,5 @@
+%h1 Plugins
+
+%ul
+  - plugins.each do |plugin|
+    %li= eval(File.basename(plugin, ".rb").capitalize).new.name5

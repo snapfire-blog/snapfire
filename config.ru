@@ -1,0 +1,3 @@
+require "./snapfire"
+
+run Cuba
