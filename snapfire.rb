@@ -1,14 +1,33 @@
 require "cuba"
-require "rack/protection"
 require "cuba/render"
+
+require "rack/protection"
+
+require_relative "snapfire/admin"
 
 Cuba.plugin Cuba::Render
 Cuba.settings[:render][:template_engine] = "haml"
 
-Cuba.use Rack::Session::Cookie, :secret => "__a_very_long_string__"
+Cuba.use Rack::Session::Cookie, secret: "__a_very_long_string__"
 Cuba.use Rack::Protection
 
 Cuba.define do
+  def assets_dir
+    "#{File.dirname(__FILE__)}/assets/"
+  end
+  on get, extension("css") do |file|
+    res["Content-Type"] = "text/css"
+    res.write File.read("#{assets_dir}/styles/#{file}.css")
+  end
+  on get, extension("js") do |file|
+    res["Content-Type"] = "text/javascript"
+    res.write File.read("#{assets_dir}/javascripts/#{file}.js")
+  end
+
+  on "admin" do
+    run Admin
+  end
+
   on get do
     on "hello" do
       res.write view("hi", world: "earth")
