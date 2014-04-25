@@ -5,11 +5,14 @@ require "rack/protection"
 
 require_relative "snapfire/admin"
 
+require_relative "snapfire/models/post"
+
 Cuba.plugin Cuba::Render
 Cuba.settings[:render][:template_engine] = "haml"
 
 Cuba.use Rack::Session::Cookie, secret: "__a_very_long_string__"
 Cuba.use Rack::Protection
+
 
 Cuba.define do
   def assets_dir
@@ -29,8 +32,14 @@ Cuba.define do
   end
 
   on get do
-    on "hello" do
-      res.write view("hi", world: "earth")
+
+    on root do
+      posts = [
+        Post.new(title: "First post", content: "Blah blah"),
+        Post.new(title: "Second post", content: "Blah blah"),
+      ]
+
+      res.write view("posts", posts: posts)
     end
 
     on "plugins" do
@@ -48,10 +57,6 @@ Cuba.define do
       end
 
       res.write view("plugin_list", plugins: plugins)
-    end
-
-    on root do
-      res.redirect "/hello"
     end
   end
 end
