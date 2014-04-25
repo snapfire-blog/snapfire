@@ -1,2 +1,2 @@
-%h1
-  = posts.first.title
+- posts.each do |post|
+  = view('post', post: post)

@@ -3,11 +3,14 @@ GEM
   specs:
     cuba (3.1.1)
       rack
+    cuba-contrib (3.1.0)
+      cuba (~> 3.1)
     diff-lcs (1.2.5)
     given_core (3.5.4)
       sorcerer (>= 0.3.7)
     haml (4.0.5)
       tilt
+    mote (1.1.2)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -32,7 +35,9 @@ PLATFORMS
 
 DEPENDENCIES
   cuba (~> 3.1.1)
+  cuba-contrib (~> 3.1.0)
   haml (~> 4.0.5)
+  mote (~> 1.1.2)
   rack-protection (~> 1.5.3)
   rspec (~> 2.14.1)
   rspec-given (~> 3.5.4)

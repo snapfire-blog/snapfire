@@ -1,11 +1,14 @@
 require "cuba"
 require "cuba/render"
+require "cuba/contrib"
 
 require "rack/protection"
 
 require_relative "snapfire/admin"
 
 require_relative "snapfire/models/post"
+require_relative "cuba_extensions/view_helpers"
+
 
 Cuba.plugin Cuba::Render
 Cuba.settings[:render][:template_engine] = "haml"
@@ -40,6 +43,12 @@ Cuba.define do
       ]
 
       res.write view("posts", posts: posts)
+    end
+
+    on "post/:slug" do |slug|
+      post = Post.new(title: "First post", content: "Blah blah")
+
+      res.write view("post", post: post)
     end
 
     on "plugins" do
